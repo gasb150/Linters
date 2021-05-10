@@ -8,4 +8,10 @@ class Rules
     @error_messages = []
   end
 
+  def first_line
+    if @line_number == 1
+      @error_messages.push(["'{' expected at the beginning of the line", @line_number]) unless @this_line[0] == '{'
+    end
+  end
+  
 end 
