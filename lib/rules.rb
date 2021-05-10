@@ -19,5 +19,12 @@ class Rules
       @error_messages.push(["New line expected after '{'", @line_number]) unless @this_line[@this_line.index('{') + 1] == "\n"
     end
   end
+
+  def check_for_errors
+    first_line 
+    after_curly
+
+    @error_messages
+  end
   
 end 
