@@ -1,7 +1,8 @@
-# require 'json'
+#require 'json'
 require './rules'
 require 'colorize'
 
+#Dir.glob("**/*.json")
 
 files_names = []
 Dir.children('.').each { |v| files_names.push(v) if v.include? '.json'}
