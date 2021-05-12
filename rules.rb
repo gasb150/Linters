@@ -43,6 +43,16 @@ class Rules
       @error_messages.push(["New line expected after '}'", @line_number]) unless @this_line[@this_line.index('}') + 1] == "\n"
     end
   end
+=begin
+  def indentation
+    no_indent = 0
+    indent = 0
+
+    if @this_line.include? "{"
+      @error_messages.push(["New line expected after ''", @line_number]) unless @this_line[@this_line.index('{') + 1] == "\n"
+    end
+  end
+=end
 
 
   def check_for_errors
