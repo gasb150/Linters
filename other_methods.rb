@@ -1,4 +1,5 @@
 
+=begin
 def indentation
   no_indent = 0
   indent = 0
@@ -8,7 +9,6 @@ def indentation
     end
 end
 
-=begin
 def first_line
     if @line_number == 1
       @error_messages.push(["'{' expected at the beginning of the line", @line_number]) unless @this_line[0] == '{'
@@ -27,11 +27,11 @@ def first_line
     end
   end
 
-  #def after_comma
-   # if @this_line.include? ','
-    #  @error_messages.push(["New line expected after ','", @line_number]) if @this_line[@this_line.index(',') + 1] != "\n"
-    #end
-  #end
+  def after_comma
+    if @this_line.include? ','
+      @error_messages.push(["New line expected after ','", @line_number]) if @this_line[@this_line.index(',') + 1] != "\n"
+    end
+  end
 
   def after_square_bracket
    if @this_line.include? '],'
