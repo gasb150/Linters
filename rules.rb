@@ -38,13 +38,19 @@ class Rules
     end
   end
 
+  def after_curly
+    if @this_line.include? '}'
+      @error_messages.push(["New line expected after '}'", @line_number]) unless @this_line[@this_line.index('}') + 1] == "\n"
+    end
+  end
+
 
   def check_for_errors
     first_line 
     after_curly
     after_colon
     after_comma
-    #after_curly
+    after_curly
     after_square_bracket
     #indentation
 
