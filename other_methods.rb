@@ -1,14 +1,5 @@
 
 =begin
-def indentation
-  no_indent = 0
-  indent = 0
-
-    if @this_line.include? "{"
-      @error_messages.push(["New line expected after ''", @line_number]) unless @this_line[@this_line.index('{') + 1] == "\n"
-    end
-end
-
 def first_line
     if @line_number == 1
       @error_messages.push(["'{' expected at the beginning of the line", @line_number]) unless @this_line[0] == '{'
@@ -43,7 +34,15 @@ def first_line
     if @this_line.include? '}'
       @error_messages.push(["New line expected after '}'", @line_number]) unless @this_line[@this_line.index('}') + 1] == "\n"
     end
-  end
+  
+    def indentation
+  no_indent = 0
+  indent = 0
+
+    if @this_line.include? "{"
+      @error_messages.push(["New line expected after ''", @line_number]) unless @this_line[@this_line.index('{') + 1] == "\n"
+    end
+end
 
   def check_for_errors
     first_line 
