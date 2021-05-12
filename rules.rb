@@ -32,6 +32,12 @@ class Rules
     end
   end
 
+  def after_square_bracket
+    if @this_line.include? '],'
+      @error_messages.push(["Empty line is expected after '],'", @line_number]) unless @this_line[@this_line.index(']') + 1] == "\n"
+    end
+  end
+
 
   def check_for_errors
     first_line 
@@ -39,8 +45,8 @@ class Rules
     after_colon
     after_comma
     #after_curly
+    after_square_bracket
     #indentation
-    #after_square_bracket
 
 
     @error_messages
