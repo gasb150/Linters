@@ -49,7 +49,7 @@ class Rules
     indent = 0
 
     if @this_line.include? "{"
-      @error_messages.push(["New line expected after ''", @line_number]) unless @this_line[@this_line.index('{') + 1] == "\n"
+      @error_messages.push(["Indentation is expected after '{'", @line_number])
     end
   end
 =end
