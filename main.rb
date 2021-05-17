@@ -1,13 +1,13 @@
 #require 'json'
-require './rules'
+require './lib/rules'
 require 'colorize'
 
 #Dir.glob("**/*.json")
 
-files_names = []
-Dir.children('.').each { |v| files_names.push(v) if v.include? '.json'}
+#files_names = []
+#Dir.children('.').each { |v| files_names.push(v) if v.include? '.json'}
 
-files_names.each do |file_name|
+Dir.glob("**/*.json").each do |file_name|
   file = File.read(file_name)
 
   array = file.each_line.to_a

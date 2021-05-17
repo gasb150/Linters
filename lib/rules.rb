@@ -8,6 +8,8 @@ class Rules
     @error_messages = []
   end
 
+private
+
   def first_line
     if @line_number == 1
       @error_messages.push(["'{' expected at the beginning of the line", @line_number]) unless @this_line[0] == '{'
@@ -25,25 +27,26 @@ class Rules
       @error_messages.push(["Space is expected after ':'", @line_number]) unless @this_line[@this_line.index('  ') + 1] == " "
     end
   end
-
+=begin
   def after_comma
     if @this_line.include? ','
       @error_messages.push(["New line expected after ','", @line_number]) if @this_line[@this_line.index(',') + 1] != "\n"
     end
   end
+=end
+  #def after_square_bracket
+   # if @this_line.include? '],'
+    #  @error_messages.push(["Empty line is expected after '],'", @line_number]) unless @this_line[@this_line.index(']') + 1] == "\n"
+    #end
+  #end
 
-  def after_square_bracket
-    if @this_line.include? '],'
-      @error_messages.push(["Empty line is expected after '],'", @line_number]) unless @this_line[@this_line.index(']') + 1] == "\n"
-    end
-  end
-
+=begin
   def after_curly
     if @this_line.include? '}'
       @error_messages.push(["New line expected after '}'", @line_number]) unless @this_line[@this_line.index('}') + 1] == "\n"
     end
   end
-=begin
+
   def indentation
     no_indent = 0
     indent = 0
@@ -54,14 +57,15 @@ class Rules
   end
 =end
 
+public
 
   def check_for_errors
     first_line 
     after_curly
     after_colon
-    after_comma
-    after_curly
-    after_square_bracket
+   # after_comma
+   # after_curly
+   # after_square_bracket
     #indentation
 
 
