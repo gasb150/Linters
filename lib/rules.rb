@@ -49,6 +49,7 @@ private
       @this_line2 = @this_line.split("\"")
       @this_line2.each_with_index do |split, i|
         if split == ',' && !@this_line2[i+1].nil?
+          p @split
           @error_messages.push(["New line expected after ','", @line_number]) if split[split.index(',') + 1] != "\n"
         end
       end
@@ -117,6 +118,11 @@ private
     end
     count
   end
+  def count_error_point
+
+  end
+
+
 
 
 
