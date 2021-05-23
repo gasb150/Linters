@@ -79,7 +79,7 @@ private
       @error_messages.push(["New empty line expected before '}'", @line_number]) unless before_split == "\n" || before_split == " "
     end
   end
-=begin
+
   def indentation
     no_indent = 0
     indent = 0
@@ -88,7 +88,7 @@ private
       @error_messages.push(["Indentation is expected after '{'", @line_number])
     end
   end
-=end
+
 
 public
 
@@ -99,7 +99,7 @@ public
     after_comma
     before_curly
     after_square_bracket
-    #indentation
+    indentation
 
 
     @error_messages
