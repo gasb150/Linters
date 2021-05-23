@@ -1,10 +1,11 @@
 class Rules
   attr_reader :this_line
 
-  def initialize(this_line, line_number, line_above = nil)
+  def initialize(this_line, line_number, line_above = nil, line_position = nil)
     @line_above = line_above
     @line_number = line_number + 1
     @this_line = this_line
+    @line_position = line_position
     @error_messages = []
   end
 
@@ -49,8 +50,8 @@ private
       @this_line2 = @this_line.split("\"")
       @this_line2.each_with_index do |split, i|
         if split == ',' && !@this_line2[i+1].nil?
-          p @split
-          @error_messages.push(["New line expected after ','", @line_number]) if split[split.index(',') + 1] != "\n"
+         @line_position = @this_line2[1].length
+          @error_messages.push(["New line expected after ','", @line_number, @line_position]) if split[split.index(',') + 1] != "\n"
         end
       end
     end

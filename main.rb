@@ -18,10 +18,11 @@ Dir.glob("**/*.json").each do |file_name|
   puts "Checking #{file_name}".yellow
   errors_counter = 0
   array.each_with_index do |l, i|
-    line = i.zero? ? Rules.new(l, i) : Rules.new(l, i, array[i - 1])
+    lin = 0
+    line = i.zero? ? Rules.new(l, i) : Rules.new(l, i, array[i - 1], lin)
     line_errors = line.check_for_errors
     line_errors.each do |errors|
-      puts "Line #{errors[1]}: ".red + errors[0]
+      puts "Line #{errors[1]} - #{errors[2]}: ".red + errors[0]
     end
     errors_counter += line_errors.length
   end
