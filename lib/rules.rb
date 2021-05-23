@@ -1,7 +1,7 @@
 class Rules
   attr_reader :this_line
 
-  def initialize(this_line, line_number, line_above = nil)
+  def initialize(this_line, line_number, line_above = nil, arrayJson = nil)
     @line_above = line_above
     @line_number = line_number + 1
     @this_line = this_line
@@ -20,33 +20,43 @@ private
     if @this_line.include? '{'
       @error_messages.push(["New line expected after '{'", @line_number]) unless @this_line[@this_line.index('{') + 1] == "\n"
     end
+    if @this_line.include? '}'
+      p @this_line
+      @error_messages.push(["New line expected after '}'", @line_number]) unless @this_line[@this_line.index('}') + 1] == "\n"
+    end
   end
 
-  def after_colon
-    if @this_line.include? ':'
-      @error_messages.push(["Space is expected after ':'", @line_number]) unless @this_line[@this_line.index('  ') + 1] == " "
-    end
-  end
-=begin
+  # def after_colon
+  #   if @this_line.include? ':'
+  #     @error_messages.push(["Space is expected after ':'", @line_number]) unless @this_line[@this_line.index(':') + 1] == " "
+  #   end
+  # end
+begin
   def after_comma
     if @this_line.include? ','
-      @error_messages.push(["New line expected after ','", @line_number]) if @this_line[@this_line.index(',') + 1] != "\n"
+      @this_line = @this_line.split("\"")
+      @this_line.each_with_index do |split, i|
+        if split == ',' && !@this_line[i+1].nil?
+          @error_messages.push(["New line expected after ','", @line_number]) if split[split.index(',') + 1] != "\n"
+        end
+      end
     end
   end
-=end
+end
   #def after_square_bracket
    # if @this_line.include? '],'
     #  @error_messages.push(["Empty line is expected after '],'", @line_number]) unless @this_line[@this_line.index(']') + 1] == "\n"
     #end
   #end
 
-=begin
-  def after_curly
+
+  def before_curly
     if @this_line.include? '}'
-      @error_messages.push(["New line expected after '}'", @line_number]) unless @this_line[@this_line.index('}') + 1] == "\n"
+      before_line = @this_line[@this_line.index('}') - 1]
+      @error_messages.push(["New empty line expected before '}'", @line_number]) unless before_line == "\n" && before_line != " "
     end
   end
-
+=begin
   def indentation
     no_indent = 0
     indent = 0
@@ -62,9 +72,9 @@ public
   def check_for_errors
     first_line 
     after_curly
-    after_colon
-   # after_comma
-   # after_curly
+    # after_colon
+    after_comma
+    before_curly
    # after_square_bracket
     #indentation
 
