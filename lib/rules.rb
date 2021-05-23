@@ -1,7 +1,7 @@
 class Rules
   attr_reader :this_line
 
-  def initialize(this_line, line_number, line_above = nil, arrayJson = nil)
+  def initialize(this_line, line_number, line_above = nil)
     @line_above = line_above
     @line_number = line_number + 1
     @this_line = this_line
@@ -61,14 +61,13 @@ private
       @this_line2.each_with_index do |split, i|
 
         if split.include?('[')
-          p split
-          p @this_line2[1 + i]
+      
          @error_messages.push(["New line expected after '['", @line_number]) if split[split.index('[') + 1] != "\n"
         end
       end
     end
     if @this_line.include? '],'
-      @error_messages.push(["Empty line is expected after '],'", @line_number]) unless @this_line[@this_line.index(']') + 1] == "\n"
+      @error_messages.push(["Empty line is expected after '],'", @line_number]) unless @this_line[@this_line.index(']') + 1] == "\n" || @this_line[@this_line.index(']') + 1] == ',' 
     end
  end
 
@@ -81,13 +80,44 @@ private
   end
 
   def indentation
-    no_indent = 0
-    indent = 0
-
-    if @this_line.include? "{"
-      @error_messages.push(["Indentation is expected after '{'", @line_number])
+    
+    @this_line2 = @this_line.split("\"")
+    # p @this_line2
+    if @this_line.include?("{") || @this_line.include?("}")
+      if  count_spaces(@this_line) > 0
+       @error_messages.push(["Indentation 0 is expected for '{' and '} ", @line_number])
+     end
+    elsif @this_line.include?("[") || @this_line.include?("]")
+     
+      if  count_spaces(@this_line) != 2
+       @error_messages.push(["Indentation 2 is expected for '[' and '] insted of #{count_spaces(@this_line)}", @line_number])
+     end
+   
+    elsif @this_line == " \n"
+    if count_spaces(@this_line) != 0
+      @error_messages.push(["Indentation 0 is expected for empty lines insted of #{count_spaces(@this_line)}", @line_number])
+    end
+   elsif @this_line != "\n"
+    @this_line
+    if count_spaces(@this_line) != 4
+      @error_messages.push(["Indentation 4 is expected for strings insted of #{count_spaces(@this_line)}", @line_number])
     end
   end
+  end
+
+  def count_spaces(line)
+    line=line.split("")
+   count = 0
+    line.each do |crt|
+      if crt == ' '
+        count += 1
+      else
+        return count
+      end
+    end
+    count
+  end
+
 
 
 public
