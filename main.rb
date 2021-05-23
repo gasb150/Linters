@@ -2,6 +2,8 @@
 require './lib/rules'
 require 'colorize'
 
+flag = ARGV[0]
+p flag
 #Dir.glob("**/*.json")
 
 #files_names = []
@@ -26,6 +28,6 @@ Dir.glob("**/*.json").each do |file_name|
     end
     errors_counter += line_errors.length
   end
-
+  puts "Total errors to solve" + "#{errors_counter}".red if !errors_counter.zero?
   puts "No errors found for #{file_name}".green if errors_counter.zero?
 end
