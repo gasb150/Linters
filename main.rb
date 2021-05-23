@@ -4,18 +4,12 @@ require 'colorize'
 
 flag = ARGV[0]
 p flag
-#Dir.glob("**/*.json")
-
-#files_names = []
-#Dir.children('.').each { |v| files_names.push(v) if v.include? '.json'}
 
 Dir.glob("**/*.json").each do |file_name|
   file = File.read(file_name)
 
   array = file.each_line.to_a
   file2 = File.open(file_name)
-  #arrayJson = JSON.load file2
-
 
   puts "Checking #{file_name}".yellow
   errors_counter = 0
