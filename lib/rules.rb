@@ -37,9 +37,9 @@ private
       @this_line2.each_with_index do |split, i|
         if i > 1
           @saved_data[:colon]  += split.length + 1
-           else 
+            else 
             @saved_data[:colon]  += split.length
-           end
+            end
         if split.include?(':') && !@this_line2[i+1].nil? && !split.include?('https')
           next_split = split[split.index(':') + 1]
           @error_messages.push(["Add space after ':'", @line_number, @saved_data[:colon] + 1]) if next_split  != " "

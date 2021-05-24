@@ -3,14 +3,15 @@ require './lib/rules'
 require 'colorize'
 
 flag = ARGV[0]
-p flag
 
 Dir.glob("**/*.json").each do |file_name|
   file = File.read(file_name)
 
   array = file.each_line.to_a
   file2 = File.open(file_name)
-
+if flag == '--fix'
+  p 'lll'
+else 
   puts "Checking #{file_name}".yellow
   errors_counter = 0
   array.each_with_index do |l, i|
@@ -24,4 +25,5 @@ Dir.glob("**/*.json").each do |file_name|
   end
   puts "Total errors to solve" + "#{errors_counter}".red if !errors_counter.zero?
   puts "No errors found for #{file_name}".green if errors_counter.zero?
+end
 end
